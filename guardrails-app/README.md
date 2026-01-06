@@ -50,6 +50,7 @@ No environment variables are required for the MVP.
 3. Use source: this repo; build command: `npm run build`; output location: `.next`.
 4. Ensure API location is left blank (app is static/edge only).
 5. Deploy; the app will serve from `/`.
+6. If using GitHub Actions, set the Static Web Apps action to deploy whatever is emitted under `.next` rather than the default `build` folder (see `.github/workflows/azure-static-web-apps.yml`).
 
 #### Azure App Service (alternative)
 1. Build: `npm run build`.
