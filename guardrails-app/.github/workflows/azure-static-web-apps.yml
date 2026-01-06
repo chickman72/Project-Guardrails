@@ -34,3 +34,5 @@ jobs:
           api_location: ""
           output_location: ".next"
           skip_app_build: true
+        env:
+          NODE_VERSION: "20.14.0"
