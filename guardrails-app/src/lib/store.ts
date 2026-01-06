@@ -2,6 +2,15 @@ import { Answers, EvaluationResult } from "./types";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
+const fallbackStorage: Storage = {
+  getItem: () => null,
+  setItem: () => undefined,
+  removeItem: () => undefined,
+  key: () => null,
+  clear: () => undefined,
+  length: 0,
+};
+
 type AssistantStore = {
   answers: Partial<Answers>;
   result?: EvaluationResult;
@@ -30,7 +39,7 @@ export const useAssistantStore = create<AssistantStore>()(
     }),
     {
       name: "guardrails-assistant",
-      storage: createJSONStorage(() => (typeof window !== "undefined" ? sessionStorage : undefined)),
+      storage: createJSONStorage(() => (typeof window !== "undefined" ? sessionStorage : fallbackStorage)),
       skipHydration: true,
     }
   )
