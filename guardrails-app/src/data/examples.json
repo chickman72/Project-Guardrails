@@ -1,0 +1,117 @@
+[
+  {
+    "id": "ex-phi-identifiable",
+    "title": "PHI identifiable going to Copilot",
+    "answers": {
+      "dataType": "phi",
+      "destination": "copilot",
+      "intent": "analyze",
+      "context": "irb_pending",
+      "deidentification": "identifiable"
+    },
+    "expectedStatus": "red",
+    "notes": "PHI stays red regardless of destination"
+  },
+  {
+    "id": "ex-human-limited-irb-approved",
+    "title": "Human subjects limited data, IRB approved, Copilot",
+    "answers": {
+      "dataType": "human_subjects",
+      "destination": "copilot",
+      "intent": "summarize",
+      "context": "irb_approved",
+      "deidentification": "limited"
+    },
+    "expectedStatus": "yellow"
+  },
+  {
+    "id": "ex-copyright-consumer",
+    "title": "Copyrighted article to consumer chatbot without permission",
+    "answers": {
+      "dataType": "copyrighted",
+      "destination": "consumer_chatbot",
+      "intent": "summarize",
+      "context": "no_irb",
+      "copyrightPermission": "no_permission"
+    },
+    "expectedStatus": "red"
+  },
+  {
+    "id": "ex-copyright-internal",
+    "title": "Copyrighted excerpt internally",
+    "answers": {
+      "dataType": "copyrighted",
+      "destination": "copilot",
+      "intent": "edit",
+      "context": "no_irb",
+      "copyrightPermission": "fair_use_uncertain"
+    },
+    "expectedStatus": "yellow"
+  },
+  {
+    "id": "ex-public-green",
+    "title": "Public content in enterprise tool",
+    "answers": {
+      "dataType": "public",
+      "destination": "copilot",
+      "intent": "brainstorm",
+      "context": "no_irb"
+    },
+    "expectedStatus": "green"
+  },
+  {
+    "id": "ex-draft-consumer",
+    "title": "Unpublished draft sent to consumer chatbot",
+    "answers": {
+      "dataType": "draft",
+      "destination": "consumer_chatbot",
+      "intent": "edit",
+      "context": "no_irb"
+    },
+    "expectedStatus": "yellow"
+  },
+  {
+    "id": "ex-draft-enterprise",
+    "title": "Draft in enterprise Copilot",
+    "answers": {
+      "dataType": "draft",
+      "destination": "copilot",
+      "intent": "summarize",
+      "context": "no_irb"
+    },
+    "expectedStatus": "green"
+  },
+  {
+    "id": "ex-proprietary-thirdparty",
+    "title": "NDA data to unknown vendor",
+    "answers": {
+      "dataType": "proprietary",
+      "destination": "third_party",
+      "intent": "analyze",
+      "context": "contract_restrictions"
+    },
+    "expectedStatus": "red"
+  },
+  {
+    "id": "ex-student-records",
+    "title": "Student records with Copilot",
+    "answers": {
+      "dataType": "student_records",
+      "destination": "copilot",
+      "intent": "summarize",
+      "context": "no_irb"
+    },
+    "expectedStatus": "yellow"
+  },
+  {
+    "id": "ex-not-sure",
+    "title": "Not sure destination and context",
+    "answers": {
+      "dataType": "public",
+      "destination": "not_sure_destination",
+      "intent": "brainstorm",
+      "context": "not_sure_context"
+    },
+    "expectedStatus": "yellow"
+  }
+]

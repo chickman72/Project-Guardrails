@@ -1,0 +1,268 @@
+[
+  {
+    "id": "phi-or-credentials-red",
+    "title": "Protected health data or credentials must stay offline",
+    "status": "red",
+    "conditions": {
+      "dataType": ["phi", "credentials"]
+    },
+    "tags": ["privacy", "security", "phi"],
+    "rationale": [
+      "PHI/credentials cannot be sent to third-party or cloud AI tools",
+      "Risk of HIPAA/FERPA/contract breaches",
+      "No downstream audit controls once uploaded"
+    ],
+    "recommendedTools": [
+      { "name": "Local/offline tool", "why": "Keeps sensitive data on managed device" },
+      { "name": "Do not paste anywhere", "why": "Avoids accidental disclosure" }
+    ],
+    "saferWorkflow": [
+      "Strip identifiers or secrets before any tooling",
+      "Work in an offline or enclave environment",
+      "Consult security/IRB before any external processing"
+    ]
+  },
+  {
+    "id": "human-identifiable-irb-pending",
+    "title": "Identifiable human data with pending IRB",
+    "status": "red",
+    "conditions": {
+      "dataType": ["human_subjects", "phi"],
+      "deidentification": ["identifiable", "not_sure_deid"],
+      "context": "irb_pending"
+    },
+    "tags": ["privacy", "irb", "phi"],
+    "rationale": [
+      "Identifiable human data cannot be shared before IRB approval",
+      "Cloud AI tools expand the data exposure surface",
+      "IRB must approve storage/processing locations"
+    ],
+    "recommendedTools": [
+      { "name": "Local/offline tool", "why": "Avoids pre-approval disclosures" },
+      { "name": "Wait for IRB approval", "why": "Required for identifiable data" }
+    ],
+    "saferWorkflow": [
+      "Pause AI usage until IRB is approved",
+      "If possible, fully de-identify data",
+      "Use secure local analytics under protocol once approved"
+    ]
+  },
+  {
+    "id": "human-limited-irb-approved-enterprise",
+    "title": "Limited human data with IRB approval and enterprise tool",
+    "status": "yellow",
+    "conditions": {
+      "dataType": "human_subjects",
+      "deidentification": ["limited", "deidentified"],
+      "context": "irb_approved",
+      "destination": "copilot"
+    },
+    "tags": ["irb", "privacy"],
+    "rationale": [
+      "IRB-approved with limited identifiers still requires caution",
+      "Enterprise Copilot provides better contractual controls",
+      "Verify data handling matches the approved protocol"
+    ],
+    "recommendedTools": [
+      { "name": "Microsoft Copilot (work)", "why": "Enterprise controls and logging" },
+      { "name": "Local/offline tool", "why": "Use when identifiers cannot be removed" }
+    ],
+    "saferWorkflow": [
+      "Remove direct identifiers before upload",
+      "Reference protocol number in your notes",
+      "Limit prompts to necessary excerpts only"
+    ]
+  },
+  {
+    "id": "copyright-no-permission-consumer",
+    "title": "Copyrighted content without permission to consumer chatbot",
+    "status": "red",
+    "conditions": {
+      "dataType": "copyrighted",
+      "copyrightPermission": ["no_permission", "fair_use_uncertain"],
+      "destination": "consumer_chatbot"
+    },
+    "tags": ["copyright"],
+    "rationale": [
+      "Consumer chatbots may reuse or retain uploaded copyrighted works",
+      "No license or uncertain fair use increases takedown risk",
+      "Terms of service often allow model training on inputs"
+    ],
+    "recommendedTools": [
+      { "name": "Do not paste anywhere", "why": "Prevent unlicensed distribution" },
+      { "name": "Local summarization tools", "why": "Keep content offline" }
+    ],
+    "saferWorkflow": [
+      "Seek permission or licensed source",
+      "Use offline summarizers or note-taking tools",
+      "Share only short excerpts that meet fair use guidance"
+    ]
+  },
+  {
+    "id": "copyright-no-permission-internal",
+    "title": "Copyrighted content without permission, internal use",
+    "status": "yellow",
+    "conditions": {
+      "dataType": "copyrighted",
+      "copyrightPermission": ["no_permission", "fair_use_uncertain", "not_sure_permission"],
+      "destination": ["copilot", "local"]
+    },
+    "tags": ["copyright"],
+    "rationale": [
+      "Internal tools reduce distribution risk but license is uncertain",
+      "Only minimal necessary excerpts should be used",
+      "Document reasoning for fair use"
+    ],
+    "recommendedTools": [
+      { "name": "Microsoft Copilot (work)", "why": "Enterprise logging for review" },
+      { "name": "Local/offline tool", "why": "Avoids broader distribution" }
+    ],
+    "saferWorkflow": [
+      "Confirm license or obtain permission",
+      "Use small excerpts, avoid whole works",
+      "Record justification in project notes"
+    ]
+  },
+  {
+    "id": "draft-to-consumer-yellow",
+    "title": "Unpublished draft to consumer or unknown vendor",
+    "status": "yellow",
+    "conditions": {
+      "dataType": "draft",
+      "destination": ["consumer_chatbot", "third_party"]
+    },
+    "tags": ["confidentiality"],
+    "rationale": [
+      "Drafts may contain unpublished findings",
+      "Consumer tools can leak or train on uploads",
+      "Check publisher or sponsor restrictions before sharing"
+    ],
+    "recommendedTools": [
+      { "name": "Microsoft Copilot (work)", "why": "Prefer enterprise over consumer tools" },
+      { "name": "Local/offline tool", "why": "Keeps drafts off third-party servers" }
+    ],
+    "saferWorkflow": [
+      "Share only non-sensitive sections",
+      "Strip figures/data before using AI",
+      "Use enterprise-approved environments"
+    ]
+  },
+  {
+    "id": "draft-enterprise-green",
+    "title": "Unpublished draft in enterprise tool",
+    "status": "green",
+    "conditions": {
+      "dataType": "draft",
+      "destination": "copilot"
+    },
+    "tags": ["confidentiality"],
+    "rationale": [
+      "Enterprise tools keep data within institutional boundary",
+      "No legal restrictions noted for drafts",
+      "Lower risk when scope is editing or outlining"
+    ],
+    "recommendedTools": [
+      { "name": "Microsoft Copilot (work)", "why": "Enterprise-grade privacy" },
+      { "name": "Local/offline tool", "why": "Use if drafts include sensitive figures" }
+    ],
+    "saferWorkflow": [
+      "Avoid uploading embargoed figures",
+      "Use short excerpts for editing",
+      "Log usage in project notes"
+    ]
+  },
+  {
+    "id": "public-green",
+    "title": "Public or non-sensitive data",
+    "status": "green",
+    "conditions": {
+      "dataType": "public",
+      "destination": ["copilot", "local"]
+    },
+    "tags": ["low_risk"],
+    "rationale": [
+      "Information is already public or non-sensitive",
+      "Enterprise or local tools keep usage traceable",
+      "No additional approvals required"
+    ],
+    "recommendedTools": [
+      { "name": "Microsoft Copilot (work)", "why": "Convenient for drafting" },
+      { "name": "Local/offline tool", "why": "Simple and low risk" }
+    ],
+    "saferWorkflow": [
+      "Avoid adding any identifiers",
+      "Keep prompts general",
+      "Document outputs in notes if used in reports"
+    ]
+  },
+  {
+    "id": "proprietary-third-party",
+    "title": "Proprietary or NDA data to consumer/unknown vendor",
+    "status": "red",
+    "conditions": {
+      "dataType": "proprietary",
+      "destination": ["consumer_chatbot", "third_party"]
+    },
+    "tags": ["nda", "contract"],
+    "rationale": [
+      "NDA/contract data cannot be shared with unvetted vendors",
+      "Terms may allow model training on uploaded content",
+      "Potential breach of confidentiality obligations"
+    ],
+    "recommendedTools": [
+      { "name": "Local/offline tool", "why": "Keeps NDA content in-house" },
+      { "name": "Enterprise Copilot", "why": "Use only if contract allows" }
+    ],
+    "saferWorkflow": [
+      "Confirm contract allows AI tooling",
+      "Remove partner identifiers before any upload",
+      "Prefer enterprise or offline analysis"
+    ]
+  },
+  {
+    "id": "student-records-ferpa",
+    "title": "Student record data",
+    "status": "yellow",
+    "conditions": {
+      "dataType": "student_records"
+    },
+    "tags": ["ferpa", "privacy"],
+    "rationale": [
+      "Student data is protected (FERPA-like)",
+      "Only approved tools with institutional agreements should be used",
+      "Consider de-identifying grades or IDs"
+    ],
+    "recommendedTools": [
+      { "name": "Microsoft Copilot (work)", "why": "Enterprise protections and auditing" },
+      { "name": "Local/offline tool", "why": "Use when unsure of vendor terms" }
+    ],
+    "saferWorkflow": [
+      "Remove names and IDs before prompts",
+      "Use aggregate statistics when possible",
+      "Log use in academic records handling notes"
+    ]
+  },
+  {
+    "id": "not-sure-default-yellow",
+    "title": "Not sure requires verification",
+    "status": "yellow",
+    "conditions": {
+      "destination": "not_sure_destination",
+      "context": ["not_sure_context", "irb_pending"]
+    },
+    "tags": ["uncertainty"],
+    "rationale": [
+      "Unclear destination or approvals warrants caution",
+      "Verifying tooling and approvals prevents accidental disclosure"
+    ],
+    "recommendedTools": [
+      { "name": "Check approved tools list", "why": "Ensure vendor is covered" },
+      { "name": "Local/offline tool", "why": "Use while awaiting clarity" }
+    ],
+    "saferWorkflow": [
+      "Confirm approved vendor or contract",
+      "Escalate to IRB/privacy officer if human data",
+      "Use synthetic or sample data until confirmed"
+    ]
+  }
+]
