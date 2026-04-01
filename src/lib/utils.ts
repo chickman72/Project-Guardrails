@@ -7,19 +7,19 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const statusColors: Record<Status, string> = {
-  green: "bg-success/10 text-success border-success/20",
-  yellow: "bg-warning/10 text-warning border-warning/20",
-  red: "bg-danger/10 text-danger border-danger/20",
+  green: "bg-green-50 text-green-700 border-green-200",
+  yellow: "bg-yellow-50 text-yellow-700 border-yellow-200",
+  red: "bg-red-50 text-red-700 border-red-200",
 };
 
 export const statusIconClasses: Record<Status, string> = {
-  green: "border-success/40 bg-success/80",
-  yellow: "border-warning/40 bg-warning/80",
-  red: "border-danger/40 bg-danger/80",
+  green: "border-green-500/40 bg-green-500/80",
+  yellow: "border-yellow-500/40 bg-yellow-500/80",
+  red: "border-red-500/40 bg-red-500/80",
 };
 
 export const statusTextColor: Record<Status, string> = {
-  green: "text-success",
-  yellow: "text-warning",
-  red: "text-danger",
+  green: "text-green-700",
+  yellow: "text-yellow-700",
+  red: "text-red-700",
 };

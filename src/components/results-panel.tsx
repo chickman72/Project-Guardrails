@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { statusColors, statusIconClasses, statusTextColor, cn } from "@/lib/utils";
-import { EvaluationResult, Answers } from "@/lib/types";
+import { EvaluationResult, Answers, Status } from "@/lib/types";
 import { formatScenarioSummary } from "@/lib/options";
 
 type Props = {
@@ -34,6 +34,21 @@ export function ResultsPanel({ answers, result }: Props) {
     URL.revokeObjectURL(url);
   };
 
+  const renderStatusWords = (text: string) => {
+    const segments = text.split(/\b(red|yellow|green)\b/gi);
+    return segments.map((segment, index) => {
+      const normalized = segment.toLowerCase();
+      if (normalized === "red" || normalized === "yellow" || normalized === "green") {
+        return (
+          <span key={`${segment}-${index}`} className={cn("font-semibold", statusTextColor[normalized as Status])}>
+            {segment}
+          </span>
+        );
+      }
+      return <span key={`${segment}-${index}`}>{segment}</span>;
+    });
+  };
+
   return (
     <Card className="border-2 border-black/60 shadow-md">
       <CardHeader className="gap-2 bg-neutral-50">
@@ -50,7 +65,7 @@ export function ResultsPanel({ answers, result }: Props) {
           </div>
           <div
             className={cn(
-              "rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
+              "rounded-full border px-4 py-2 text-center text-sm font-semibold leading-tight transition-colors",
               statusColors[result.status],
               statusTextColor[result.status]
             )}
@@ -102,7 +117,13 @@ export function ResultsPanel({ answers, result }: Props) {
                 </Button>
               </div>
             </div>
-            <pre className="h-48 overflow-auto whitespace-pre-wrap rounded-lg border border-border bg-neutral-50 p-3 text-xs text-neutral-800">{result.checklistText}</pre>
+            <pre className="h-48 overflow-auto whitespace-pre-wrap rounded-lg border border-border bg-neutral-50 p-3 text-xs text-neutral-800">
+              {result.checklistText.split("\n").map((line, idx) => (
+                <span key={idx} className="block">
+                  {renderStatusWords(line)}
+                </span>
+              ))}
+            </pre>
           </div>
         </section>
       </CardContent>

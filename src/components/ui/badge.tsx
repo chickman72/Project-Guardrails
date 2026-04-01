@@ -6,11 +6,11 @@ type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & { tone?: "default" | "
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(({ className, tone = "default", ...props }, ref) => {
   const toneClass =
     tone === "success"
-      ? "bg-success/10 text-success border-success/30"
+      ? "bg-green-50 text-green-700 border-green-300"
       : tone === "warning"
-        ? "bg-warning/10 text-warning border-warning/30"
+        ? "bg-yellow-50 text-yellow-700 border-yellow-300"
         : tone === "danger"
-          ? "bg-danger/10 text-danger border-danger/30"
+          ? "bg-red-50 text-red-700 border-red-300"
           : "bg-neutral-100 text-neutral-900 border-neutral-200";
   return (
     <span
