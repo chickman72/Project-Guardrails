@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Script from "next/script";
 
 export default function Home() {
   const highlights = [
@@ -73,6 +74,12 @@ export default function Home() {
           ))}
         </section>
       </main>
+      <nexus-chat-widget
+        data-api-key="sk-uab-secure-key-123"
+        data-api-url="/api/chat"
+        data-mode="floating"
+      ></nexus-chat-widget>
+      <Script src="http://localhost:3000/embed.js" strategy="afterInteractive" />
     </div>
   );
 }
