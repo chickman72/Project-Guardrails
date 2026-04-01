@@ -15,10 +15,11 @@ export function OptionCard<T extends string>({ option, selected, onSelect }: Opt
   return (
     <button
       type="button"
+      aria-pressed={selected}
       onClick={() => onSelect(option.value)}
       className={cn(
         "w-full rounded-xl border p-4 text-left transition hover:-translate-y-0.5 hover:border-black/60 hover:shadow-md",
-        selected ? "border-black bg-neutral-50 shadow-sm" : "border-border bg-white"
+        selected ? "border-black bg-neutral-200 shadow-sm" : "border-border bg-white"
       )}
     >
       <div className="font-semibold text-neutral-900">{option.label}</div>
