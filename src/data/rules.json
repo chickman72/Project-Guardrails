@@ -1,15 +1,37 @@
 [
-  {
-    "id": "phi-or-credentials-red",
-    "title": "Protected health data or credentials must stay offline",
+{
+    "id": "credentials-red",
+    "title": "Credentials must stay offline",
     "status": "red",
     "conditions": {
-      "dataType": ["phi", "credentials"]
+      "dataType": ["credentials"]
+    },
+    "tags": ["security", "credentials"],
+    "rationale": [
+      "Credentials/secrets cannot be sent to third-party or cloud AI tools",
+      "Severe risk of system breaches",
+      "No downstream audit controls once uploaded"
+    ],
+    "recommendedTools": [
+      { "name": "Do not paste anywhere", "why": "Avoids accidental disclosure" }
+    ],
+    "saferWorkflow": [
+      "Strip secrets before any tooling",
+      "Store secrets in an approved password manager only"
+    ]
+  },
+  {
+    "id": "phi-identifiable-red",
+    "title": "Identifiable or limited PHI must stay offline",
+    "status": "red",
+    "conditions": {
+      "dataType": ["phi"],
+      "deidentification": ["identifiable", "limited", "not_sure_deid"]
     },
     "tags": ["privacy", "security", "phi"],
     "rationale": [
-      "PHI/credentials cannot be sent to third-party or cloud AI tools",
-      "Risk of HIPAA/FERPA/contract breaches",
+      "Identifiable or limited PHI cannot be sent to cloud AI tools",
+      "Severe risk of HIPAA/FERPA/contract breaches",
       "No downstream audit controls once uploaded"
     ],
     "recommendedTools": [
@@ -17,9 +39,33 @@
       { "name": "Do not paste anywhere", "why": "Avoids accidental disclosure" }
     ],
     "saferWorkflow": [
-      "Strip identifiers or secrets before any tooling",
+      "Strip identifiers completely before any tooling",
       "Work in an offline or enclave environment",
       "Consult security/IRB before any external processing"
+    ]
+  },
+  {
+    "id": "phi-deidentified-copilot-green",
+    "title": "Fully de-identified clinical data in enterprise tool",
+    "status": "green",
+    "conditions": {
+      "dataType": ["phi"],
+      "deidentification": ["deidentified"],
+      "destination": ["copilot"]
+    },
+    "tags": ["privacy", "phi", "low_risk"],
+    "rationale": [
+      "Data is fully scrubbed, removing HIPAA restrictions for this workflow",
+      "Enterprise Copilot protects prompts and does not train on inputs",
+      "Always double-check that no accidental identifiers slipped through"
+    ],
+    "recommendedTools": [
+      { "name": "Microsoft Copilot (work)", "why": "Secure environment for scrubbed data" }
+    ],
+    "saferWorkflow": [
+      "Run transcripts through approved local de-identifier tool first",
+      "Verify the 'Protected' badge is visible in Copilot UI",
+      "Paste the scrubbed text for thematic analysis"
     ]
   },
   {
